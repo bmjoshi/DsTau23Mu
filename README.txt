@@ -1,6 +1,7 @@
 dsTreeMaker.cc ==> plugin used to produce 2016 ntuples
 ConfFile_tree_data.py ==> python config for running dsTreeMaker.cc
 
+Tau23MuNtupleMaker => merging classes from MuonPogNtuples and with tau3mu ( namespace containing dsTreeMaker.cpp classes created specifically for our analysis.) Also, trying to make code flexible for running on AOD and MiniAOD.
 
 *** old ROOT macros for analyzing ntuples ***
 
