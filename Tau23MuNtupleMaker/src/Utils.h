@@ -1,7 +1,7 @@
 #ifndef Utils_h__
 #define Utils_h__
 
-#include "MuonPogTree.h"
+#include "Tau23MuTree.h"
 #include "TLorentzVector.h"
 #include "TMath.h"
 #include "TChain.h"
@@ -15,7 +15,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace muon_pog
+namespace tau23mu
 {
 
   // The names says it all
@@ -30,9 +30,9 @@ namespace muon_pog
   }
 
     
-  // Check if a muon_pog::Muon passes a given ID (embedded using official selectors)
+  // Check if a tau23mu::Muon passes a given ID (embedded using official selectors)
   // Valid IDs are GLOBAL, TRACKER, SOFT, LOOSE, MEDIUM, TIGHT, HIGHPT
-  bool hasGoodId(const muon_pog::Muon & muon, TString muId)
+  bool hasGoodId(const tau23mu::Muon & muon, TString muId)
   {
     
     if (muId == "GLOBAL")      return muon.isGlobal  == 1;
@@ -54,19 +54,19 @@ namespace muon_pog
   };
 
 
-  // Returns the charge muon_pog::Muon for a given fit 
+  // Returns the charge tau23mu::Muon for a given fit 
   // Valid track fits are: PF, TUNEP, GLB, INNER, PICKY, DYT, TPFMS
-  Int_t chargeFromTrk(const muon_pog::Muon & muon, 
+  Int_t chargeFromTrk(const tau23mu::Muon & muon, 
 		      const std::string & trackType)
   {
 
-    if (trackType == "PF")         return muon.fits.at(muons_pog::MuonFitType::DEFAULT).charge;
-    else if (trackType == "TUNEP") return muon.fits.at(muons_pog::MuonFitType::TUNEP).charge;
-    else if (trackType == "GLB")   return muon.fits.at(muons_pog::MuonFitType::GLB).charge;
-    else if (trackType == "INNER") return muon.fits.at(muons_pog::MuonFitType::INNER).charge;
-    else if (trackType == "PICKY") return muon.fits.at(muons_pog::MuonFitType::PICKY).charge;
-    else if (trackType == "DYT") return muon.fits.at(muons_pog::MuonFitType::DYT).charge;
-    else if (trackType == "TPFMS") return muon.fits.at(muons_pog::MuonFitType::TPFMS).charge;
+    if (trackType == "PF")         return muon.fits.at(muon_pog::MuonFitType::DEFAULT).charge;
+    else if (trackType == "TUNEP") return muon.fits.at(muon_pog::MuonFitType::TUNEP).charge;
+    else if (trackType == "GLB")   return muon.fits.at(muon_pog::MuonFitType::GLB).charge;
+    else if (trackType == "INNER") return muon.fits.at(muon_pog::MuonFitType::INNER).charge;
+    else if (trackType == "PICKY") return muon.fits.at(muon_pog::MuonFitType::PICKY).charge;
+    else if (trackType == "DYT") return muon.fits.at(muon_pog::MuonFitType::DYT).charge;
+    else if (trackType == "TPFMS") return muon.fits.at(muon_pog::MuonFitType::TPFMS).charge;
       
     else
       {
@@ -80,28 +80,28 @@ namespace muon_pog
   }
 
 
-  // Return a TLorentz vector out of a given fit from muon_pog::Muon 
+  // Return a TLorentz vector out of a given fit from tau23mu::Muon 
   // Valid track fits are: PF, TUNEP, GLB, INNER, PICKY, DYT, TPFMS
-  TLorentzVector muonTk(const muon_pog::Muon & muon, 
+  TLorentzVector muonTk(const tau23mu::Muon & muon, 
 			const std::string & trackType)
   {
 
     TLorentzVector result;
-    muon_pog::MuonFit fit;
+    tau23mu::MuonFit fit;
     if (trackType == "PF")
-      fit = muon.fits.at(muons_pog::MuonFitType::DEFAULT)
+      fit = muon.fits.at(muon_pog::MuonFitType::DEFAULT)
     else if (trackType == "TUNEP")
-      fit = muon.fits.at(muons_pog::MuonFitType::TUNEP)
+      fit = muon.fits.at(muon_pog::MuonFitType::TUNEP)
     else if (trackType == "GLB")
-      fit = muon.fits.at(muons_pog::MuonFitType::GLB)
+      fit = muon.fits.at(muon_pog::MuonFitType::GLB)
     else if (trackType == "INNER")
-      fit = muon.fits.at(muons_pog::MuonFitType::INNER)
+      fit = muon.fits.at(muon_pog::MuonFitType::INNER)
     else if (trackType == "PICKY")
-      fit = muon.fits.at(muons_pog::MuonFitType::PICKY)
+      fit = muon.fits.at(muon_pog::MuonFitType::PICKY)
     else if (trackType == "DYT")
-      fit = muon.fits.at(muons_pog::MuonFitType::DYT)
+      fit = muon.fits.at(muon_pog::MuonFitType::DYT)
     else if (trackType == "TPFMS")
-      fit = muon.fits.at(muons_pog::MuonFitType::TPFMS)
+      fit = muon.fits.at(muon_pog::MuonFitType::TPFMS)
     else
       {
 	std::cout << "[Plotter::muonTk]: Invalid track type: "
@@ -115,9 +115,9 @@ namespace muon_pog
   }
 
 
-  // Checks if a trigger path fired using muon_pog::HLT
+  // Checks if a trigger path fired using tau23mu::HLT
   // if the path name is "none" returns always true
-  bool pathHasFired(const muon_pog::HLT  & hlt, std::string pathName)
+  bool pathHasFired(const tau23mu::HLT  & hlt, std::string pathName)
   {
     
     if (pathName == "none")
@@ -133,11 +133,11 @@ namespace muon_pog
   }
   
 
-  // Checks if the iner track of muon_pog::Muon matches geometrically 
-  // in dR with a given muon_pog::HLT object filter
+  // Checks if the iner track of tau23mu::Muon matches geometrically 
+  // in dR with a given tau23mu::HLT object filter
   // if the filter name is "none" returns always true
-  bool hasFilterMatch(const muon_pog::Muon & muon,
-		      const muon_pog::HLT  & hlt,
+  bool hasFilterMatch(const tau23mu::Muon & muon,
+		      const tau23mu::HLT  & hlt,
 		      std::string & filter, Float_t dR)
   {
 
@@ -161,7 +161,7 @@ namespace muon_pog
     
   }
 
-  bool hasMother(const muon_pog::GenParticle & gen, Int_t pdgId)
+  bool hasMother(const tau23mu::GenParticle & gen, Int_t pdgId)
     {
       
       for (auto motherId : gen.mothers)
@@ -177,14 +177,14 @@ namespace muon_pog
     }
 
 
-  const muon_pog::GenParticle * hasGenMatch(const muon_pog::Muon & muon,
-					    const std::vector<muon_pog::GenParticle>  & gens,
+  const tau23mu::GenParticle * hasGenMatch(const tau23mu::Muon & muon,
+					    const std::vector<tau23mu::GenParticle>  & gens,
 					    Float_t dRCut, Int_t motherPdgId = 0, Int_t vetoPdgId = 0)
   {
    
     TLorentzVector muTk = muonTk(muon,std::string("INNER"));
     
-    const muon_pog::GenParticle * bestGen = 0;
+    const tau23mu::GenParticle * bestGen = 0;
     Float_t bestDr = 999.;
     
     for (auto & gen : gens)
@@ -298,5 +298,3 @@ namespace muon_pog
 }
 
 #endif
-
-
