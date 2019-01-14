@@ -9,6 +9,8 @@
 #include <array>
 #include <algorithm>
 
+using namespace std;
+
 namespace tau23mu {
   
   enum MuonDetType { DT=0, CSC, RPC };
@@ -107,16 +109,17 @@ namespace tau23mu {
 
     Double_t dR_mu1mu2;
     Double_t dR_mu2mu3;
-    Double_t dR_mu3mu1;
+    Double_t dR_mu1mu3;
 
     Double_t dz_mu1mu2;
     Double_t dz_mu2mu3;
-    Double_t dz_mu3mu1;
+    Double_t dz_mu1mu3;
 
     Double_t M3mu;
+	 Double_t triMuFitVtx_nC2;
     Double_t M_mu1mu2;
     Double_t M_mu2mu3;
-    Double_t M_mu3mu1;
+    Double_t M_mu1mu3;
 
     std::array<Double_t, 3> mu_p;
     std::array<Double_t, 3> mu_pt;
@@ -125,9 +128,9 @@ namespace tau23mu {
     std::array<Double_t, 3> mu_eta;
     std::array<Double_t, 3> mu_phi;
     std::array<Double_t, 3> mu_charge;
-    std::array<Double_t, 3> vx;
-    std::array<Double_t, 3> vy;
-    std::array<Double_t, 3> vz;
+    std::array<Double_t, 3> mu_vx;
+    std::array<Double_t, 3> mu_vy;
+    std::array<Double_t, 3> mu_vz;
 
     std::array<Double_t, 3> mu_uSta;
     std::array<Double_t, 3> mu_trkKink;
@@ -147,6 +150,7 @@ namespace tau23mu {
     std::array<Double_t, 3> mu_calHadS9;
     std::array<Int_t, 3> mu_nOMS;
     std::array<Int_t, 3> mu_nOM;
+    std::array<Int_t, 3> mu_nOVPH;
     std::array<Double_t, 3> mu_comp2d;
     std::array<Double_t, 3> mu_calocomp;
     std::array<Double_t, 3> mu_segcomp;
@@ -157,6 +161,7 @@ namespace tau23mu {
     std::array<Double_t, 3> mu_inTrk_eta;
     std::array<Double_t, 3> mu_inTrk_phi;
     std::array<Double_t, 3> mu_inTrk_nC2;
+    std::array<Double_t, 3> mu_inTrk_validFraction;
     std::array<Int_t, 3> mu_inTrk_trkLayWithMeas;
     std::array<Int_t, 3> mu_inTrk_pixLayWithMeas;
     std::array<Int_t, 3> mu_inTrk_nHitsTracker;
@@ -164,14 +169,14 @@ namespace tau23mu {
     std::array<Int_t, 3> mu_inTrk_nLostTrkHits;
     std::array<Int_t, 3> mu_inTrk_nLostTrkHits_in;
     std::array<Int_t, 3> mu_inTrk_nLostTrkHits_out;
-    std::array<Double_t, 3> mu_trkHP;
+    std::array<Double_t, 3> mu_inTrk_HP;
     
 	 // Muon outer track info
     std::array<Double_t, 3> mu_oTrk_p; 
     std::array<Double_t, 3> mu_oTrk_pt; 
     std::array<Double_t, 3> mu_oTrk_eta; 
     std::array<Double_t, 3> mu_oTrk_phi; 
-	 std::array<Int_t, 3> mu_ioTrk_nHits;
+	 std::array<Int_t, 3> mu_oTrk_nHits;
 
     std::array<Double_t, 3> mu_oTrk_nC2; 
     std::array<Double_t, 3> mu_oTrk_MSWVH; 
@@ -186,22 +191,22 @@ namespace tau23mu {
     std::array<Int_t, 3>  mu_glb_nHits;
     
 	 // Muon ID
-	 std::array<bool, 3> mu_isPF;
-    std::array<bool, 3> mu_isRPC;
-    std::array<bool, 3> mu_isStandAlone;
-    std::array<bool, 3> mu_isTrackerArb;
-    std::array<bool, 3> mu_isTracker;
-    std::array<bool, 3> mu_isGlobal;
-    std::array<bool, 3> mu_isSoft;
-    std::array<bool, 3> mu_isTight;
-    std::array<bool, 3> mu_isLoose;
-    std::array<bool, 3> mu_isMedium;
-    std::array<bool, 3> mu_isHighPt;
-    std::array<bool, 3> mu_hasInnerTrack;
-    std::array<bool, 3> mu_hasTunePTrack;
-    std::array<bool, 3> mu_hasPickyTrack;
-    std::array<bool, 3> mu_hasDytTrack;
-    std::array<bool, 3> mu_hasTpfmsTrack;
+	 std::array<Bool_t, 3> mu_isPF;
+    std::array<Bool_t, 3> mu_isRPC;
+    std::array<Bool_t, 3> mu_isStandAlone;
+    std::array<Bool_t, 3> mu_isTrackerArb;
+    std::array<Bool_t, 3> mu_isTracker;
+    std::array<Bool_t, 3> mu_isGlobal;
+    std::array<Bool_t, 3> mu_isSoft;
+    std::array<Bool_t, 3> mu_isTight;
+    std::array<Bool_t, 3> mu_isLoose;
+    std::array<Bool_t, 3> mu_isMedium;
+    std::array<Bool_t, 3> mu_isHighPt;
+    std::array<Bool_t, 3> mu_hasInnerTrack;
+    std::array<Bool_t, 3> mu_hasTunePTrack;
+    std::array<Bool_t, 3> mu_hasPickyTrack;
+    std::array<Bool_t, 3> mu_hasDytTrack;
+    std::array<Bool_t, 3> mu_hasTpfmsTrack;
 
 
     // Detector based isolation
@@ -218,44 +223,121 @@ namespace tau23mu {
     std::array<Double_t, 3> photonIso;
     std::array<Double_t, 3> neutralHadronIso;
 	 
-	 std::array<Double_t, 3> isoPflow04; // PF isolation in dR<0.4 cone dBeta
-    std::array<Double_t, 3> isoPflow03; // PF isolation in dR<0.3 cone dBeta
+	 std::array<Double_t, 3> mu_isoPflow04; // PF isolation in dR<0.4 cone dBeta
+    std::array<Double_t, 3> mu_isoPflow03; // PF isolation in dR<0.3 cone dBeta
 	 
-	 std::array<Double_t, 3> dxy;   // signed transverse distance to primary vertex [cm]
-    std::array<Double_t, 3> dz;  // signed longitudinal distance to primary vertex at min. transv. distance [cm]
-    std::array<Double_t, 3> edxy;  // uncertainty on dxy [cm]
-    std::array<Double_t, 3> edz;   // uncertainty on dz [cm]
-    std::array<Double_t, 3> dxybs;  // signed transverse distance to beamspot [cm]
-    std::array<Double_t, 3> dzbs;  // signed longitudinal distance to beamspot [cm]
+	 std::array<Double_t, 3> mu_dxy;   // signed transverse distance to primary vertex [cm]
+    std::array<Double_t, 3> mu_dz;  // signed longitudinal distance to primary vertex at min. transv. distance [cm]
+    std::array<Double_t, 3> mu_edxy;  // uncertainty on dxy [cm]
+    std::array<Double_t, 3> mu_edz;   // uncertainty on dz [cm]
+    std::array<Double_t, 3> mu_dxybs;  // signed transverse distance to beamspot [cm]
+    std::array<Double_t, 3> mu_dzbs;  // signed longitudinal distance to beamspot [cm]
 	 std::array<Double_t, 3> mu_dxyBest; // signed tranverse distance to primary vertex [cm] using best track
 	 std::array<Double_t, 3> mu_dzBest; // signed longitudnal distance to primary vertex [cm] using best track
-	 std::array<Double_t, 3> dxyInner;  
-    std::array<Double_t, 3> dzInner; 
+	 std::array<Double_t, 3> mu_dxyInner;  
+    std::array<Double_t, 3> mu_dzInner; 
 
     // Tight muon
-    std::array<bool, 3> mu_TMOST;
-    std::array<bool, 3> mu_TMOSAT;
-    std::array<bool, 3> mu_TMLST;
-    std::array<bool, 3> mu_TMLSAT;
-    std::array<bool, 3> mu_TMLSOLPT;
-    std::array<bool, 3> mu_TMSOBLPT;
+    std::array<Bool_t, 3> mu_TMOST;
+    std::array<Bool_t, 3> mu_TMOSAT;
+    std::array<Bool_t, 3> mu_TMLST;
+    std::array<Bool_t, 3> mu_TMLSAT;
+    std::array<Bool_t, 3> mu_TMLSOLPT;
+    std::array<Bool_t, 3> mu_TMLSOBLPT;
 
     std::array<Double_t, 3> mu_tau_dR;
+	 Double_t mu_taudR_max;
+	 Double_t mu_trkLayWithMeas_max;
     std::array<Double_t, 3> mu_timAtIpInOutErr;
 
     // Muon time 
-    std::array<Double_t, 3> muonTimeDof; 
-    std::array<Double_t, 3> muonTime; 
-    std::array<Double_t, 3> muonTimeErr;
+    std::array<Double_t, 3> mu_TimeDof; 
+    std::array<Double_t, 3> mu_Time; 
+    std::array<Double_t, 3> mu_TimeErr;
+	 
+	 // Muon RPC time 
+    std::array<Double_t, 2> mu_RpcTimeDof; 
+    std::array<Double_t, 2> mu_RpcTime; 
+    std::array<Double_t, 2> mu_RpcTimeErr;
 
-    // Muon time 
-    std::array<Double_t, 3> muonRpcTimeDof; 
-    std::array<Double_t, 3> muonRpcTime; 
-    std::array<Double_t, 3> muonRpcTimeErr;
-
+	 // names say it all
     std::vector<tau23mu::HitInfo> hits;
     std::vector<tau23mu::ChambMatch> matches;
     std::vector<tau23mu::MuonFit> fits;
+
+	 Double_t dca_mu1mu2;
+	 Double_t dca_mu2mu3;
+	 Double_t dca_mu1mu3;
+	 Double_t dca_max;
+
+	 Double_t m3mu_refit;
+	 
+	 // Fit vertex variables
+	 Double_t fv_tC2;
+	 Double_t fv_dof;
+	 Double_t fv_nC2;
+	 Double_t fv_Prob;
+	 Double_t fv_cosdphi;
+	 Double_t fv_cosdphi3D;
+	 Double_t fv_d3D;
+	 Double_t fv_d3Dsig;
+	 Double_t fv_dxy;
+	 Double_t fv_dxysig;
+	 Double_t fv_ppdl3D;
+
+	 // Primary vertex
+	 Double_t pv1_tC2;
+	 Double_t pv1_nC2;
+	 Double_t pv2_tC2;
+	 Double_t pv2_nC2;
+
+	 Double_t dphi_pv;
+
+	 std::array<Double_t, 3> fvwo_tC2;
+	 std::array<Double_t, 3> fvwo_nC2;
+
+	 std::array<Double_t, 3> d0;
+	 std::array<Double_t, 3> d0sig;
+
+	 Int_t pv_nSoftMu;
+
+	 // Secondary vertex variables
+	 Int_t n_sv;
+
+	 vector<Double_t> sv_cosdphi3D;
+	 vector<Double_t> sv_d3D;
+	 vector<Double_t> sv_overlap;
+	 vector<Double_t> sv_d3Dsig;
+	 vector<Double_t> sv_ppdl3D;
+	 vector<Double_t> sv_nmu;
+	 vector<Double_t> sv_mass;
+	 vector<Double_t> sv_pt;
+	 vector<Double_t> sv_dz;
+	 vector<Double_t> sv_ntrk;
+
+	 //??
+	 std::array<Double_t, 3> dzpv;
+
+	 Double_t ntrk_tau;
+	 Double_t ntrk_tau0p5;
+	 Double_t ntrk_tau_b;
+	 Double_t ntrk_sum;
+	 Double_t ntrk0p1;
+	 Double_t ntrk0p2;
+	 Double_t ntrk0p5;
+	 Double_t maxdxy_pv0;
+	 Double_t mindca_iso;
+	 Double_t mindca_iso05;
+
+	 std::array<Double_t, 3> ntrk;
+
+	 Double_t trkrel_tau;
+	 Double_t trkrel_tau0p5;
+	 std::array<Double_t, 3> trkrel;
+	 Double_t trkrel_max;
+
+	 std::array<Int_t, 3> mu_ggm;
+	 std::array<Int_t, 3> mu_tgm;
 
     triMuon_cand(){};
     virtual ~triMuon_cand(){};
@@ -308,17 +390,18 @@ namespace tau23mu {
     Double_t mu_eta_min;
 
     Double_t dR_mu1mu2;
-    Double_t dR_mu2mu3;
-    Double_t dR_mu3mu1;
+    Double_t dR_mu2trk;
+    Double_t dR_mu1trk;
 
     Double_t dz_mu1mu2;
-    Double_t dz_mu2mu3;
-    Double_t dz_mu3mu1;
+    Double_t dz_mu2trk;
+    Double_t dz_mu1trk;
 
-    Double_t M3mu;
+    Double_t M2muTrk;
     Double_t M_mu1mu2;
-    Double_t M_mu2mu3;
-    Double_t M_mu3mu1;
+    Double_t M_mu1trk;
+    Double_t M_mu2trk;
+	 Double_t diMuTrkFitVtx_nC2;
 
     std::array<Double_t, 2> mu_p;
     std::array<Double_t, 2> mu_pt;
@@ -327,9 +410,9 @@ namespace tau23mu {
     std::array<Double_t, 2> mu_eta;
     std::array<Double_t, 2> mu_phi;
     std::array<Double_t, 2> mu_charge;
-    std::array<Double_t, 2> vx;
-    std::array<Double_t, 2> vy;
-    std::array<Double_t, 2> vz;
+    std::array<Double_t, 2> mu_vx;
+    std::array<Double_t, 2> mu_vy;
+    std::array<Double_t, 2> mu_vz;
 
     std::array<Double_t, 2> mu_uSta;
     std::array<Double_t, 2> mu_trkKink;
@@ -349,6 +432,7 @@ namespace tau23mu {
     std::array<Double_t, 2> mu_calHadS9;
     std::array<Int_t, 2> mu_nOMS;
     std::array<Int_t, 2> mu_nOM;
+    std::array<Int_t, 3> mu_nOVPH;
     std::array<Double_t, 2> mu_comp2d;
     std::array<Double_t, 2> mu_calocomp;
     std::array<Double_t, 2> mu_segcomp;
@@ -359,6 +443,7 @@ namespace tau23mu {
     std::array<Double_t, 2> mu_inTrk_eta;
     std::array<Double_t, 2> mu_inTrk_phi;
     std::array<Double_t, 2> mu_inTrk_nC2;
+    std::array<Double_t, 2> mu_inTrk_validFraction;
     std::array<Int_t, 2> mu_inTrk_trkLayWithMeas;
     std::array<Int_t, 2> mu_inTrk_pixLayWithMeas;
     std::array<Int_t, 2> mu_inTrk_nHitsTracker;
@@ -366,14 +451,14 @@ namespace tau23mu {
     std::array<Int_t, 2> mu_inTrk_nLostTrkHits;
     std::array<Int_t, 2> mu_inTrk_nLostTrkHits_in;
     std::array<Int_t, 2> mu_inTrk_nLostTrkHits_out;
-    std::array<Double_t, 2> mu_trkHP;
+    std::array<Double_t, 2> mu_inTrk_HP;
     
 	 // Muon outer track info
     std::array<Double_t, 2> mu_oTrk_p; 
     std::array<Double_t, 2> mu_oTrk_pt; 
     std::array<Double_t, 2> mu_oTrk_eta; 
     std::array<Double_t, 2> mu_oTrk_phi; 
-	 std::array<Int_t, 2> mu_ioTrk_nHits;
+	 std::array<Int_t, 2> mu_oTrk_nHits;
 
     std::array<Double_t, 2> mu_oTrk_nC2; 
     std::array<Double_t, 2> mu_oTrk_MSWVH; 
@@ -388,22 +473,22 @@ namespace tau23mu {
     std::array<Int_t, 2>  mu_glb_nHits;
     
 	 // Muon ID
-	 std::array<bool, 2> mu_isPF;
-    std::array<bool, 2> mu_isRPC;
-    std::array<bool, 2> mu_isStandAlone;
-    std::array<bool, 2> mu_isTrackerArb;
-    std::array<bool, 2> mu_isTracker;
-    std::array<bool, 2> mu_isGlobal;
-    std::array<bool, 2> mu_isSoft;
-    std::array<bool, 2> mu_isTight;
-    std::array<bool, 2> mu_isLoose;
-    std::array<bool, 2> mu_isMedium;
-    std::array<bool, 2> mu_isHighPt;
-    std::array<bool, 2> mu_hasInnerTrack;
-    std::array<bool, 2> mu_hasTunePTrack;
-    std::array<bool, 2> mu_hasPickyTrack;
-    std::array<bool, 2> mu_hasDytTrack;
-    std::array<bool, 2> mu_hasTpfmsTrack;
+	 std::array<Bool_t, 2> mu_isPF;
+    std::array<Bool_t, 2> mu_isRPC;
+    std::array<Bool_t, 2> mu_isStandAlone;
+    std::array<Bool_t, 2> mu_isTrackerArb;
+    std::array<Bool_t, 2> mu_isTracker;
+    std::array<Bool_t, 2> mu_isGlobal;
+    std::array<Bool_t, 2> mu_isSoft;
+    std::array<Bool_t, 2> mu_isTight;
+    std::array<Bool_t, 2> mu_isLoose;
+    std::array<Bool_t, 2> mu_isMedium;
+    std::array<Bool_t, 2> mu_isHighPt;
+    std::array<Bool_t, 2> mu_hasInnerTrack;
+    std::array<Bool_t, 2> mu_hasTunePTrack;
+    std::array<Bool_t, 2> mu_hasPickyTrack;
+    std::array<Bool_t, 2> mu_hasDytTrack;
+    std::array<Bool_t, 2> mu_hasTpfmsTrack;
 
 
     // Detector based isolation
@@ -420,44 +505,140 @@ namespace tau23mu {
     std::array<Double_t, 2> photonIso;
     std::array<Double_t, 2> neutralHadronIso;
 	 
-	 std::array<Double_t, 2> isoPflow04; // PF isolation in dR<0.4 cone dBeta
-    std::array<Double_t, 2> isoPflow03; // PF isolation in dR<0.3 cone dBeta
+	 std::array<Double_t, 2> mu_isoPflow04; // PF isolation in dR<0.4 cone dBeta
+    std::array<Double_t, 2> mu_isoPflow03; // PF isolation in dR<0.3 cone dBeta
 	 
-	 std::array<Double_t, 2> dxy;   // signed transverse distance to primary vertex [cm]
-    std::array<Double_t, 2> dz;  // signed longitudinal distance to primary vertex at min. transv. distance [cm]
-    std::array<Double_t, 2> edxy;  // uncertainty on dxy [cm]
-    std::array<Double_t, 2> edz;   // uncertainty on dz [cm]
-    std::array<Double_t, 2> dxybs;  // signed transverse distance to beamspot [cm]
-    std::array<Double_t, 2> dzbs;  // signed longitudinal distance to beamspot [cm]
+	 std::array<Double_t, 2> mu_dxy;   // signed transverse distance to primary vertex [cm]
+    std::array<Double_t, 2> mu_dz;  // signed longitudinal distance to primary vertex at min. transv. distance [cm]
+    std::array<Double_t, 2> mu_edxy;  // uncertainty on dxy [cm]
+    std::array<Double_t, 2> mu_edz;   // uncertainty on dz [cm]
+    std::array<Double_t, 2> mu_dxybs;  // signed transverse distance to beamspot [cm]
+    std::array<Double_t, 2> mu_dzbs;  // signed longitudinal distance to beamspot [cm]
 	 std::array<Double_t, 2> mu_dxyBest; // signed tranverse distance to primary vertex [cm] using best track
 	 std::array<Double_t, 2> mu_dzBest; // signed longitudnal distance to primary vertex [cm] using best track
-	 std::array<Double_t, 2> dxyInner;  
-    std::array<Double_t, 2> dzInner; 
+	 std::array<Double_t, 2> mu_dxyInner;  
+    std::array<Double_t, 2> mu_dzInner; 
 
     // Tight muon
-    std::array<bool, 2> mu_TMOST;
-    std::array<bool, 2> mu_TMOSAT;
-    std::array<bool, 2> mu_TMLST;
-    std::array<bool, 2> mu_TMLSAT;
-    std::array<bool, 2> mu_TMLSOLPT;
-    std::array<bool, 2> mu_TMSOBLPT;
+    std::array<Bool_t, 2> mu_TMOST;
+    std::array<Bool_t, 2> mu_TMOSAT;
+    std::array<Bool_t, 2> mu_TMLST;
+    std::array<Bool_t, 2> mu_TMLSAT;
+    std::array<Bool_t, 2> mu_TMLSOLPT;
+    std::array<Bool_t, 2> mu_TMLSOBLPT;
+	 
+	 Double_t mu_dsdR_max;
+	 Double_t mu_trkLayWithMeas_max;
 
-    std::array<Double_t, 2> mu_tau_dR;
+    std::array<Double_t, 2> mu_ds_dR;
     std::array<Double_t, 2> mu_timAtIpInOutErr;
 
     // Muon time 
-    std::array<Double_t, 2> muonTimeDof; 
-    std::array<Double_t, 2> muonTime; 
-    std::array<Double_t, 2> muonTimeErr;
+    std::array<Double_t, 2> mu_TimeDof; 
+    std::array<Double_t, 2> mu_Time; 
+    std::array<Double_t, 2> mu_TimeErr;
 
-    // Muon time 
-    std::array<Double_t, 2> muonRpcTimeDof; 
-    std::array<Double_t, 2> muonRpcTime; 
-    std::array<Double_t, 2> muonRpcTimeErr;
+    // Muon RPC time 
+    std::array<Double_t, 2> mu_RpcTimeDof; 
+    std::array<Double_t, 2> mu_RpcTime; 
+    std::array<Double_t, 2> mu_RpcTimeErr;
 
     std::vector<tau23mu::HitInfo> hits;
     std::vector<tau23mu::ChambMatch> matches;
     std::vector<tau23mu::MuonFit> fits;
+	 
+	 Double_t trk_pterr ;
+    Bool_t trk_trkhp ;
+    Double_t trk_charge ;
+    Double_t trk_p ;
+    Double_t trk_pt ;
+    Double_t trk_eta ;
+    Double_t trk_phi ;
+    Double_t trk_nOVPH ;
+    Double_t trk_iTvF ;
+    Double_t trk_tLWM ;
+    Double_t trk_pLWM ;
+    Double_t trk_nOVTH ;
+    Double_t trk_nOLTH ;
+    Double_t trk_nOLTHin ;
+    Double_t trk_nOLTHout ;
+    Double_t trk_iTnC;
+
+
+	 // distance of closest approach
+	 Double_t dca_mu1mu2;
+	 Double_t dca_mu2trk;
+	 Double_t dca_mu1trk;
+	 Double_t dca_max;
+
+	 Double_t m2muTrk_refit;
+	 
+	 // Fit vertex variables
+	 Double_t fv_tC2;
+	 Double_t fv_dof;
+	 Double_t fv_nC2;
+	 Double_t fv_Prob;
+	 Double_t fv_cosdphi;
+	 Double_t fv_cosdphi3D;
+	 Double_t fv_dxy;
+	 Double_t fv_dxysig;
+	 Double_t fv_d3D;
+	 Double_t fv_d3Dsig;
+	 Double_t fv_ppdl3D;
+
+	 // Primary vertex
+	 Double_t pv1_tC2;
+	 Double_t pv1_nC2;
+	 Double_t pv2_tC2;
+	 Double_t pv2_nC2;
+
+	 Double_t dphi_pv;
+
+	 std::array<Double_t, 3> fvwo_tC2;
+	 std::array<Double_t, 3> fvwo_nC2;
+
+	 std::array<Double_t, 3> d0;
+	 std::array<Double_t, 3> d0sig;
+
+	 Int_t pv_nSoftMu;
+
+	 // Secondary vertex variables
+	 Int_t n_sv;
+
+	 vector<Double_t> sv_cosdphi3D;
+	 vector<Double_t> sv_d3D;
+	 vector<Double_t> sv_overlap;
+	 vector<Double_t> sv_d3Dsig;
+	 vector<Double_t> sv_ppdl3D;
+	 vector<Double_t> sv_nmu;
+	 vector<Double_t> sv_mass;
+	 vector<Double_t> sv_pt;
+	 vector<Double_t> sv_dz;
+	 vector<Double_t> sv_ntrk;
+
+	 //??
+	 std::array<Double_t, 3> dzpv;
+
+	 Double_t ntrk_tau;
+	 Double_t ntrk_tau0p5;
+	 Double_t ntrk_tau_b;
+	 Double_t ntrk_sum;
+	 Double_t ntrk0p1;
+	 Double_t ntrk0p2;
+	 Double_t ntrk0p5;
+	 Double_t maxdxy_pv0;
+	 Double_t mindca_iso;
+	 Double_t mindca_iso05;
+
+	 std::array<Double_t, 3> ntrk;
+
+	 Double_t trkrel_tau;
+	 Double_t trkrel_tau0p5;
+	 std::array<Double_t, 3> trkrel;
+	 Double_t trkrel_max;
+	 
+	 std::array<Int_t, 2> mu_ggm;
+	 std::array<Int_t, 2> mu_tgm;
 
     diMuonTrk_cand(){};
     virtual ~diMuonTrk_cand(){};
@@ -530,7 +711,7 @@ namespace tau23mu {
     Float_t vz; // z coordinate of production vertex [cm]
     std::vector<Int_t> mothers; // vector of indices of mothers
     std::vector<Int_t> daughters; //vector of indices of daughters
-    std::vector<bool>  flags; // vector of flags, in the same order of
+    std::vector<Bool_t>  flags; // vector of flags, in the same order of
     //  of "DataFormats/HepMCCandidate/interface/GenStatusFlag.h"
 
   private:
@@ -740,14 +921,14 @@ namespace tau23mu {
 
     HLT(){};
     virtual ~HLT(){};
-    bool match( const std::string & path ) {
+    Bool_t match( const std::string & path ) {
     if (  std::find (  triggers.begin(), triggers.end(), path ) != triggers.end() )
       return true;
 
     return false;
     }
 
-    bool find( const std::string & path ) {
+    Bool_t find( const std::string & path ) {
     for ( std::vector<std::string>::const_iterator it = triggers.begin(); it != triggers.end(); ++it ) {
       if ( it->find ( path ) != std::string::npos ) return true;
     }

@@ -1,6 +1,8 @@
 #ifndef PDG_INFO
 #define PDG_INFO
 
+#define KPM_MASS 0.4937
+#define K0_MASS 0.4976
 #define MU_MASS 0.1056
 #define PI0_MASS 0.1350
 #define PIPM_MASS 0.1396 

@@ -1,0 +1,8 @@
+inputFiles = [file:/eos/cms/store/relval/CMSSW_10_3_0_pre1/SingleMuon/MINIAOD/102X_dataRun2_PromptLike_v4_RelVal_sigMu2017B-v1/10000/16C806AC-3298-E811-8BB4-0CC47A4D7644.root'
+'file:/eos/cms/store/relval/CMSSW_10_3_0_pre1/SingleMuon/MINIAOD/102X_dataRun2_PromptLike_v4_RelVal_sigMu2017B-v1/10000/24E8F689-3198-E811-B19C-0CC47A4C8E26.root'
+'file:/eos/cms/store/relval/CMSSW_10_3_0_pre1/SingleMuon/MINIAOD/102X_dataRun2_PromptLike_v4_RelVal_sigMu2017B-v1/10000/42032293-2D98-E811-8985-0CC47A7C34D0.root'
+'file:/eos/cms/store/relval/CMSSW_10_3_0_pre1/SingleMuon/MINIAOD/102X_dataRun2_PromptLike_v4_RelVal_sigMu2017B-v1/10000/449D1C8D-5698-E811-B3FC-0CC47A4C8E20.root'
+'file:/eos/cms/store/relval/CMSSW_10_3_0_pre1/SingleMuon/MINIAOD/102X_dataRun2_PromptLike_v4_RelVal_sigMu2017B-v1/10000/822F0BDC-4398-E811-AB49-0CC47A4C8F12.root'
+'file:/eos/cms/store/relval/CMSSW_10_3_0_pre1/SingleMuon/MINIAOD/102X_dataRun2_PromptLike_v4_RelVal_sigMu2017B-v1/10000/8CDD9A8D-3B98-E811-9A52-0CC47A4C8E1E.root'
+'file:/eos/cms/store/relval/CMSSW_10_3_0_pre1/SingleMuon/MINIAOD/102X_dataRun2_PromptLike_v4_RelVal_sigMu2017B-v1/10000/9A2FE74D-4798-E811-9AA3-0025905A60AA.root'
+'file:/eos/cms/store/relval/CMSSW_10_3_0_pre1/SingleMuon/MINIAOD/102X_dataRun2_PromptLike_v4_RelVal_sigMu2017B-v1/10000/FC2C6885-2F98-E811-A080-0CC47A4D7664.root']
